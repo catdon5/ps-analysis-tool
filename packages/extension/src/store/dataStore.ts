@@ -624,6 +624,7 @@ class DataStore {
               auctionEvents: isMultiSellerAuction ? groupedAuctionBids : rest,
               multiSellerAuction: isMultiSellerAuction,
               globalEvents: globalEvents ?? [],
+              globalEventsForEE: this.globalJoinEvents,
             },
           });
           this.tabs[tabId].newUpdatesPA = 0;
