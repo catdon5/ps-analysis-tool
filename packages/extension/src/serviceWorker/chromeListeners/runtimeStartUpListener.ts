@@ -30,4 +30,10 @@ export const onStartUpListener = async () => {
   if (Object.keys(storage).includes('isUsingCDP')) {
     dataStore.globalIsUsingCDP = storage.isUsingCDP;
   }
+
+  const { globalJoinEvents } = await chrome.storage.local.get('globalEvents');
+
+  dataStore.globalJoinEvents = {
+    ...globalJoinEvents,
+  };
 };

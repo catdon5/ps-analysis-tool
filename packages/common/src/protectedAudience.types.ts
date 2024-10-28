@@ -24,6 +24,7 @@ export interface singleAuctionEvent {
   bid?: number;
   name?: string;
   ownerOrigin?: string;
+  joiningOrigin?: string;
   type: string;
   formattedTime: string | Date;
   componentSellerOrigin?: string;

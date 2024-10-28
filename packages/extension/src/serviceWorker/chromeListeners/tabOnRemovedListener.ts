@@ -18,8 +18,14 @@
  */
 import dataStore from '../../store/dataStore';
 
-export const onTabRemovedListener = (tabId: number) => {
+export const onTabRemovedListener = async (tabId: number) => {
   dataStore.deinitialiseVariablesForTab(tabId.toString());
 
   dataStore?.removeTabData(tabId);
+
+  await chrome.storage.local.set({
+    globalJoinEvents: {
+      ...dataStore.globalJoinEvents,
+    },
+  });
 };

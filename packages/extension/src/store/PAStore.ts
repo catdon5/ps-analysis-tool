@@ -120,6 +120,37 @@ class PAStore {
       eventType: 'interestGroupAccessed' as singleAuctionEvent['eventType'],
     };
 
+    const websiteUrl = dataStore.getTabUrl(Number(tabId)) ?? '';
+
+    if (!dataStore.globalJoinEvents[websiteUrl]) {
+      dataStore.globalJoinEvents[websiteUrl] = {
+        igGroups: [],
+        websiteType: 'advertiser',
+      };
+    }
+
+    if (type === 'join') {
+      dataStore.globalJoinEvents[websiteUrl]?.igGroups.push({
+        time: accessTime,
+        ownerOrigin,
+        name,
+        type,
+      });
+    }
+
+    if (
+      [
+        'bid',
+        'win',
+        'additionalBid',
+        'additionalBidWin',
+        'topLevelBid',
+        'topLevelAdditionalBid',
+      ].includes(type)
+    ) {
+      dataStore.globalJoinEvents[websiteUrl].websiteType = 'publisher';
+    }
+
     this.getAuctionEventsArray(tabId, 'globalEvents').push(eventData);
 
     dataStore.tabs[parseInt(tabId)].newUpdatesPA++;

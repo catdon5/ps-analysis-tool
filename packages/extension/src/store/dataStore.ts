@@ -107,6 +107,20 @@ class DataStore {
   cookieDB: CookieDatabase | null = null;
 
   /**
+   * Global IG Events
+   */
+  globalJoinEvents: {
+    [website: string]: {
+      igGroups: {
+        ownerOrigin: string;
+        name: string;
+        time: number;
+        type: string;
+      }[];
+      websiteType: 'publisher' | 'advertiser';
+    };
+  } = {};
+  /**
    * The cookie data of the tabs.
    */
   tabToRead = '';
@@ -316,6 +330,7 @@ class DataStore {
       tabsData: this.tabsData,
       tabs: this.tabs,
       auctionEvents: this.auctionEvents,
+      globalJoinEvents: this.globalJoinEvents,
     };
 
     this.tabsData[tabId] = {};
