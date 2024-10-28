@@ -25,6 +25,18 @@ import {
   type AdsAndBiddersType,
 } from '@google-psat/common';
 
+export interface EEEvents {
+  [websiteName: string]: {
+    igGroups: {
+      name: string;
+      ownerOrigin: string;
+      time: string;
+      details: Record<string, string | number>;
+    }[];
+    websiteType: string;
+  };
+}
+
 export interface ProtectedAudienceContextType {
   state: {
     auctionEvents: AuctionEventsType;
@@ -33,6 +45,7 @@ export interface ProtectedAudienceContextType {
     receivedBids: ReceivedBids[];
     noBids: NoBidsType;
     adsAndBidders: AdsAndBiddersType;
+    globalEventsForEE: EEEvents | null;
   };
 }
 
@@ -44,6 +57,7 @@ const initialState: ProtectedAudienceContextType = {
     receivedBids: [],
     noBids: {},
     adsAndBidders: {},
+    globalEventsForEE: {},
   },
 };
 

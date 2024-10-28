@@ -36,6 +36,7 @@ import type {
 import Context, { type ProtectedAudienceContextType } from './context';
 import {
   computeInterestGroupDetails,
+  computeInterestGroupDetailsForEE,
   computeReceivedBidsAndNoBids,
 } from './utils';
 import { isEqual } from 'lodash-es';
@@ -65,6 +66,12 @@ const Provider = ({ children }: PropsWithChildren) => {
     ProtectedAudienceContextType['state']['adsAndBidders']
   >({});
 
+  const [globalEventsForEE, setGlobalEventsForEE] =
+    useState<ProtectedAudienceContextType['state']['globalEventsForEE']>(null);
+
+  const [globalEventsForEEWithDetails, setGlobalEventsForEEWithDetails] =
+    useState<ProtectedAudienceContextType['state']['globalEventsForEE']>(null);
+
   const messagePassingListener = useCallback(
     // eslint-disable-next-line complexity
     async (message: {
@@ -75,6 +82,7 @@ const Provider = ({ children }: PropsWithChildren) => {
         multiSellerAuction: boolean;
         globalEvents: singleAuctionEvent[];
         refreshTabData: boolean;
+        globalEventsForEE: ProtectedAudienceContextType['state']['globalEventsForEE'];
       };
     }) => {
       let didAuctionEventsChange = false;
@@ -92,6 +100,22 @@ const Provider = ({ children }: PropsWithChildren) => {
       ) {
         if (message.payload.tabId === tabId) {
           setIsMultiSellerAuction(message.payload.multiSellerAuction);
+
+          setGlobalEventsForEE((prevState) => {
+            if (!prevState && message.payload.globalEventsForEE) {
+              return message.payload.globalEventsForEE;
+            }
+
+            if (
+              prevState &&
+              message.payload.globalEventsForEE &&
+              !isEqual(prevState, message.payload.globalEventsForEE)
+            ) {
+              return message.payload.globalEventsForEE;
+            }
+
+            return prevState;
+          });
 
           setAuctionEvents((prevState) => {
             if (!prevState && message.payload.auctionEvents) {
@@ -199,6 +223,32 @@ const Provider = ({ children }: PropsWithChildren) => {
   );
 
   useEffect(() => {
+    if (!globalEventsForEE) {
+      return;
+    }
+    (async () => {
+      const _globalEventsForEE = await computeInterestGroupDetailsForEE(
+        globalEventsForEE
+      );
+      setGlobalEventsForEEWithDetails((prevState) => {
+        if (!prevState && _globalEventsForEE) {
+          return _globalEventsForEE;
+        }
+
+        if (
+          prevState &&
+          _globalEventsForEE &&
+          !isEqual(prevState, _globalEventsForEE)
+        ) {
+          return _globalEventsForEE;
+        }
+
+        return prevState;
+      });
+    })();
+  }, [globalEventsForEE]);
+
+  useEffect(() => {
     chrome.runtime.onMessage.addListener(messagePassingListener);
 
     return () => {
@@ -215,9 +265,11 @@ const Provider = ({ children }: PropsWithChildren) => {
         receivedBids,
         noBids,
         adsAndBidders,
+        globalEventsForEE: globalEventsForEEWithDetails,
       },
     };
   }, [
+    globalEventsForEEWithDetails,
     auctionEvents,
     interestGroupDetails,
     isMultiSellerAuction,

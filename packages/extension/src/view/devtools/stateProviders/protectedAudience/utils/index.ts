@@ -14,4 +14,5 @@
  * limitations under the License.
  */
 export { default as computeInterestGroupDetails } from './computeInterestGroupDetails';
+export { default as computeInterestGroupDetailsForEE } from './computeInterestGroupDetailsForEE';
 export { default as computeReceivedBidsAndNoBids } from './computeReceivedBidsAndNoBids';
