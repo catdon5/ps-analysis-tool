@@ -15,47 +15,83 @@
  */
 export const STORY_JSON = [
   {
-    heroImage: 'https://assets.codepen.io/1780597/pizza.jpg',
-    publisherLogo: 'https://assets.codepen.io/1780597/1pizza_logo.png',
-    publisherName: 'John Wilson',
-    storyTitle: 'A Taste Of New York Pizza History',
+    heroImage:
+      'https://privacysandbox-stories.com/wp-content/uploads/2024/12/cropped-An-experience-for-user-choice-with-third-party-cookies.png',
+    publisherLogo:
+      'https://privacysandbox-stories.com/wp-content/uploads/2024/11/cropped-image-10.png',
+    publisherName: 'Sam Dutton',
+    storyTitle: 'An experience for user choice with third-party cookies',
     storyUrl:
-      'https://wp.stories.google/stories/a-taste-of-new-york-pizza-history/#embedMode=2',
+      'https://privacysandbox-stories.com/web-stories/an-experience-for-user-choice-with-third-party-cookies/#embedMode=2',
   },
   {
-    heroImage: 'https://assets.codepen.io/1780597/homewarrior.jpg',
-    publisherLogo: 'https://assets.codepen.io/1780597/2logo.png',
-    publisherName: 'Sean Dong',
-    storyTitle: 'Home Warrior Pandemic Special',
-    storyUrl: 'https://wsdemos.uc.r.appspot.com/homewarrior#embedMode=2',
-  },
-  {
-    heroImage: 'https://assets.codepen.io/1780597/chicken.jpg',
-    publisherLogo: 'https://assets.codepen.io/1780597/4logo.png',
-    publisherName: 'Jamie Leach',
-    storyTitle: 'Crispy Chicken Thigh With Vegetables',
-    storyUrl: 'https://wsdemos.uc.r.appspot.com/kitchen#embedMode=2',
-  },
-  {
-    heroImage: 'https://assets.codepen.io/1780597/artquiz.jpg',
-    publisherLogo: 'https://assets.codepen.io/1780597/5logo.png',
-    publisherName: 'Hong Wei',
-    storyTitle: 'The Ultimate Art Quiz',
-    storyUrl: 'https://wsdemos.uc.r.appspot.com/art-quiz#embedMode=2',
-  },
-  {
-    heroImage: 'https://assets.codepen.io/1780597/clay.jpg',
-    publisherLogo: 'https://assets.codepen.io/1780597/6logo.png',
-    publisherName: 'Jenny Wilson',
-    storyTitle: 'A guide to shaping clay ',
+    heroImage:
+      'https://privacysandbox-stories.com/wp-content/uploads/2024/12/cropped-Navigating-the-future-of-third-party-cookies.png',
+    publisherLogo:
+      'https://privacysandbox-stories.com/wp-content/uploads/2024/12/cropped-Natalia-Markoborodova.jpeg',
+    publisherName: 'Natalia Markoborodova',
+    storyTitle: 'Navigating the future of third-party cookies',
     storyUrl:
-      'https://wp.stories.google/stories/a-guide-to-shaping-clay/#embedMode=2',
+      'https://privacysandbox-stories.com/web-stories/navigating-the-future-of-third-party-cookies/#embedMode=2',
   },
   {
-    heroImage: 'https://assets.codepen.io/1780597/animalpoll.jpg',
-    publisherLogo: 'https://assets.codepen.io/1780597/5logo.png',
-    publisherName: 'Hong Wei',
-    storyTitle: 'What Animal are you?',
-    storyUrl: 'https://wsdemos.uc.r.appspot.com/animal-poll#embedMode=2',
+    heroImage:
+      'https://privacysandbox-stories.com/wp-content/uploads/2024/12/cropped-Test-your-site-for-third-party-cookie-breakages.png',
+    publisherLogo:
+      'https://privacysandbox-stories.com/wp-content/uploads/2024/12/cropped-Natalia-Markoborodova.jpeg',
+    publisherName: 'Natalia Markoborodova',
+    storyTitle: 'Test your site for third-party cookie breakages',
+    storyUrl:
+      'https://privacysandbox-stories.com/web-stories/test-your-site-for-third-party-cookie-breakages/#embedMode=2',
+  },
+  {
+    heroImage:
+      'https://privacysandbox-stories.com/wp-content/uploads/2024/12/cropped-Third-party-cookies-and-the-era-of-user-choice.png',
+    publisherLogo:
+      'https://privacysandbox-stories.com/wp-content/uploads/2024/11/cropped-image-10.png',
+    publisherName: 'Sam Dutton',
+    storyTitle: 'Third-party cookies and the era of user choice',
+    storyUrl:
+      'https://privacysandbox-stories.com/web-stories/third-party-cookies-and-the-era-of-user-choice/#embedMode=2',
+  },
+  {
+    heroImage:
+      'https://privacysandbox-stories.com/wp-content/uploads/2024/12/cropped-Time-to-check-your-site-for-third-party-cookies.png',
+    publisherLogo:
+      'https://privacysandbox-stories.com/wp-content/uploads/2024/11/cropped-image-10.png',
+    publisherName: 'Sam Dutton',
+    storyTitle: 'Time to check your site for third-party cookies',
+    storyUrl:
+      'https://privacysandbox-stories.com/web-stories/time-to-check-your-site-for-third-party-cookies/#embedMode=2',
+  },
+  {
+    heroImage:
+      'https://privacysandbox-stories.com/wp-content/uploads/2024/12/cropped-What-are-third-party-cookies.png',
+    publisherLogo:
+      'https://privacysandbox-stories.com/wp-content/uploads/2024/11/cropped-image-10.png',
+    publisherName: 'Sam Dutton',
+    storyTitle: 'What are third-party cookies?',
+    storyUrl:
+      'https://privacysandbox-stories.com/web-stories/what-are-third-party-cookies/#embedMode=2',
+  },
+  {
+    heroImage:
+      'https://privacysandbox-stories.com/wp-content/uploads/2024/12/cropped-The-future-of-third-party-cookies-1.png',
+    publisherLogo:
+      'https://privacysandbox-stories.com/wp-content/uploads/2024/12/cropped-Natalia-Markoborodova.jpeg',
+    publisherName: 'Natalia Markoborodova',
+    storyTitle: 'The future of third-party cookies',
+    storyUrl:
+      'https://privacysandbox-stories.com/web-stories/the-future-of-third-party-cookies/#embedMode=2',
+  },
+  {
+    heroImage:
+      'https://privacysandbox-stories.com/wp-content/uploads/2024/11/cropped-image.png',
+    publisherLogo:
+      'https://privacysandbox-stories.com/wp-content/uploads/2024/11/cropped-image-10.png',
+    publisherName: 'Sam Dutton',
+    storyTitle: 'Chrome Shifts to User Choice for Third-party Cookies',
+    storyUrl:
+      'https://privacysandbox-stories.com/web-stories/chrome-shifts-to-user-choice-for-third-party-cookies/#embedMode=2',
   },
 ];
