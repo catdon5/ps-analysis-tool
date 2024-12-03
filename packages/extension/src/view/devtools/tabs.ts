@@ -308,7 +308,8 @@ const TABS: SidebarItems = {
     },
     dropdownOpen: false,
     children: {},
-    addSpacer: true,
+    addSpacer: false,
+    addDivider: true,
     containerClassName: 'h-6',
   },
   [SIDEBAR_ITEMS_KEYS.SETTINGS]: {
