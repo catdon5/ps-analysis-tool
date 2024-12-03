@@ -26,7 +26,7 @@ export const STORY_JSON = [
   },
   {
     heroImage:
-      'https://privacysandbox-stories.com/wp-content/uploads/2024/12/cropped-Navigating-the-future-of-third-party-cookies.png.avif',
+      'https://privacysandbox-stories.com/wp-content/uploads/2024/12/cropped-Navigating-the-future-of-third-party-cookies-png.avif',
     publisherLogo:
       'https://privacysandbox-stories.com/wp-content/uploads/2024/12/cropped-Natalia-Markoborodova-jpeg.avif',
     publisherName: 'Natalia Markoborodova',
