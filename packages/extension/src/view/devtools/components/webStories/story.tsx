@@ -16,9 +16,9 @@
 export const STORY_JSON = [
   {
     heroImage:
-      'https://privacysandbox-stories.com/wp-content/uploads/2024/12/cropped-An-experience-for-user-choice-with-third-party-cookies.png',
+      'https://privacysandbox-stories.com/wp-content/uploads/2024/12/cropped-An-experience-for-user-choice-with-third-party-cookies-png.avif',
     publisherLogo:
-      'https://privacysandbox-stories.com/wp-content/uploads/2024/11/cropped-image-10.png',
+      'https://privacysandbox-stories.com/wp-content/uploads/2024/11/cropped-image-10-png.avif',
     publisherName: 'Sam Dutton',
     storyTitle: 'An experience for user choice with third-party cookies',
     storyUrl:
@@ -26,9 +26,9 @@ export const STORY_JSON = [
   },
   {
     heroImage:
-      'https://privacysandbox-stories.com/wp-content/uploads/2024/12/cropped-Navigating-the-future-of-third-party-cookies.png',
+      'https://privacysandbox-stories.com/wp-content/uploads/2024/12/cropped-Navigating-the-future-of-third-party-cookies.png.avif',
     publisherLogo:
-      'https://privacysandbox-stories.com/wp-content/uploads/2024/12/cropped-Natalia-Markoborodova.jpeg',
+      'https://privacysandbox-stories.com/wp-content/uploads/2024/12/cropped-Natalia-Markoborodova-jpeg.avif',
     publisherName: 'Natalia Markoborodova',
     storyTitle: 'Navigating the future of third-party cookies',
     storyUrl:
@@ -36,9 +36,9 @@ export const STORY_JSON = [
   },
   {
     heroImage:
-      'https://privacysandbox-stories.com/wp-content/uploads/2024/12/cropped-Test-your-site-for-third-party-cookie-breakages.png',
+      'https://privacysandbox-stories.com/wp-content/uploads/2024/12/cropped-Test-your-site-for-third-party-cookie-breakages-png.avif',
     publisherLogo:
-      'https://privacysandbox-stories.com/wp-content/uploads/2024/12/cropped-Natalia-Markoborodova.jpeg',
+      'https://privacysandbox-stories.com/wp-content/uploads/2024/12/cropped-Natalia-Markoborodova-jpeg.avif',
     publisherName: 'Natalia Markoborodova',
     storyTitle: 'Test your site for third-party cookie breakages',
     storyUrl:
@@ -46,9 +46,9 @@ export const STORY_JSON = [
   },
   {
     heroImage:
-      'https://privacysandbox-stories.com/wp-content/uploads/2024/12/cropped-Third-party-cookies-and-the-era-of-user-choice.png',
+      'https://privacysandbox-stories.com/wp-content/uploads/2024/12/cropped-Third-party-cookies-and-the-era-of-user-choice-png.avif',
     publisherLogo:
-      'https://privacysandbox-stories.com/wp-content/uploads/2024/11/cropped-image-10.png',
+      'https://privacysandbox-stories.com/wp-content/uploads/2024/11/cropped-image-10-png.avif',
     publisherName: 'Sam Dutton',
     storyTitle: 'Third-party cookies and the era of user choice',
     storyUrl:
@@ -56,9 +56,9 @@ export const STORY_JSON = [
   },
   {
     heroImage:
-      'https://privacysandbox-stories.com/wp-content/uploads/2024/12/cropped-Time-to-check-your-site-for-third-party-cookies.png',
+      'https://privacysandbox-stories.com/wp-content/uploads/2024/12/cropped-Time-to-check-your-site-for-third-party-cookies-png.avif',
     publisherLogo:
-      'https://privacysandbox-stories.com/wp-content/uploads/2024/11/cropped-image-10.png',
+      'https://privacysandbox-stories.com/wp-content/uploads/2024/11/cropped-image-10-png.avif',
     publisherName: 'Sam Dutton',
     storyTitle: 'Time to check your site for third-party cookies',
     storyUrl:
@@ -66,9 +66,9 @@ export const STORY_JSON = [
   },
   {
     heroImage:
-      'https://privacysandbox-stories.com/wp-content/uploads/2024/12/cropped-What-are-third-party-cookies.png',
+      'https://privacysandbox-stories.com/wp-content/uploads/2024/12/cropped-What-are-third-party-cookies-png.avif',
     publisherLogo:
-      'https://privacysandbox-stories.com/wp-content/uploads/2024/11/cropped-image-10.png',
+      'https://privacysandbox-stories.com/wp-content/uploads/2024/11/cropped-image-10-png.avif',
     publisherName: 'Sam Dutton',
     storyTitle: 'What are third-party cookies?',
     storyUrl:
@@ -76,9 +76,9 @@ export const STORY_JSON = [
   },
   {
     heroImage:
-      'https://privacysandbox-stories.com/wp-content/uploads/2024/12/cropped-The-future-of-third-party-cookies-1.png',
+      'https://privacysandbox-stories.com/wp-content/uploads/2024/12/cropped-The-future-of-third-party-cookies-1-png.avif',
     publisherLogo:
-      'https://privacysandbox-stories.com/wp-content/uploads/2024/12/cropped-Natalia-Markoborodova.jpeg',
+      'https://privacysandbox-stories.com/wp-content/uploads/2024/12/cropped-Natalia-Markoborodova-jpeg.avif',
     publisherName: 'Natalia Markoborodova',
     storyTitle: 'The future of third-party cookies',
     storyUrl:
@@ -86,9 +86,9 @@ export const STORY_JSON = [
   },
   {
     heroImage:
-      'https://privacysandbox-stories.com/wp-content/uploads/2024/11/cropped-image.png',
+      'https://privacysandbox-stories.com/wp-content/uploads/2024/12/cropped-Chrome-Shifts-to-User-Choice-for-Third-party-Cookies-png.avif',
     publisherLogo:
-      'https://privacysandbox-stories.com/wp-content/uploads/2024/11/cropped-image-10.png',
+      'https://privacysandbox-stories.com/wp-content/uploads/2024/11/cropped-image-10-png.avif',
     publisherName: 'Sam Dutton',
     storyTitle: 'Chrome Shifts to User Choice for Third-party Cookies',
     storyUrl:
