@@ -36,6 +36,10 @@ interface TableProps {
   isFiltersSidebarOpen?: boolean;
   hideFiltering?: boolean;
   extraInterfaceToTopBar?: () => React.JSX.Element;
+  minWidth?: string;
+  hideSearch?: boolean;
+  hideTableTopBar?: boolean;
+  rowHeightClass?: string;
 }
 
 const Table = ({
@@ -43,6 +47,10 @@ const Table = ({
   isFiltersSidebarOpen = false,
   hideFiltering = false,
   extraInterfaceToTopBar,
+  minWidth,
+  hideSearch,
+  hideTableTopBar,
+  rowHeightClass,
 }: TableProps) => {
   const {
     tableContainerRef,
@@ -111,17 +119,24 @@ const Table = ({
 
   return (
     <div className="w-full h-full flex flex-col">
-      <TableTopBar
-        showFilterSidebar={showFilterSidebar}
-        hideFiltering={hideFiltering}
-        setShowFilterSidebar={setShowFilterSidebar}
-        extraInterface={extraInterfaceToTopBar}
-      />
-      <ChipsBar
-        selectedFilters={selectedFilters}
-        resetFilters={resetFilters}
-        toggleFilterSelection={toggleFilterSelection}
-      />
+      {!hideTableTopBar && (
+        <>
+          <TableTopBar
+            showFilterSidebar={showFilterSidebar}
+            hideFiltering={hideFiltering}
+            setShowFilterSidebar={setShowFilterSidebar}
+            extraInterface={extraInterfaceToTopBar}
+            hideSearch={hideSearch}
+          />
+          {!hideFiltering && (
+            <ChipsBar
+              selectedFilters={selectedFilters}
+              resetFilters={resetFilters}
+              toggleFilterSelection={toggleFilterSelection}
+            />
+          )}
+        </>
+      )}
       <div className="w-full flex-1 overflow-hidden h-full flex divide-x divide-american-silver dark:divide-quartz border-t border-gray-300 dark:border-quartz">
         {showFilterSidebar && (
           <Resizable
@@ -130,6 +145,7 @@ const Table = ({
             enable={{
               right: true,
             }}
+            className="overflow-auto h-full"
           >
             <FiltersSidebar
               filters={filters}
@@ -149,7 +165,10 @@ const Table = ({
             position={columnPosition}
           />
           <div
-            className="h-full w-full overflow-hidden min-w-[70rem] flex flex-col"
+            className="h-full w-full overflow-hidden flex flex-col"
+            style={{
+              minWidth: minWidth ?? '70rem',
+            }}
             ref={tableRef}
           >
             <TableHeader
@@ -161,6 +180,7 @@ const Table = ({
               isRowFocused={isRowFocused}
               setIsRowFocused={setIsRowFocused}
               selectedKey={selectedKey}
+              rowHeightClass={rowHeightClass}
             />
           </div>
         </div>

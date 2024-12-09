@@ -13,23 +13,95 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies.
  */
-import React from 'react';
-import { LandingPage, PSInfoKey } from '@google-psat/design-system';
-import { I18n } from '@google-psat/i18n';
+import React, { useMemo } from 'react';
+import {
+  InfoCard as InfoCardTemplate,
+  PSInfoKey,
+  QuickLinksList,
+  TabsProvider,
+  type PSInfoKeyType,
+  type TabItems,
+} from '@google-psat/design-system';
+
+/**
+ * Internal dependencies.
+ */
+import InterestGroups from './interestGroups';
+import Auctions from './auctions';
+import Bids from './bids';
+import Panel from './panel';
+import ExplorableExplanationPanel from './explorableExplanation/panel';
+import AdUnits from './adUnits';
+
+const InfoCard = ({ infoKey }: { infoKey: PSInfoKeyType }) => {
+  return (
+    <>
+      <InfoCardTemplate infoKey={infoKey} />
+      <div className="mt-8 border-t border-gray-300 dark:border-quartz">
+        <QuickLinksList />
+      </div>
+    </>
+  );
+};
 
 const ProtectedAudience = () => {
+  const tabItems = useMemo<TabItems>(
+    () => [
+      {
+        title: 'Overview',
+        content: {
+          Element: InfoCard,
+          props: {
+            infoKey: PSInfoKey.ProtectedAudience,
+          },
+          className: 'p-4',
+        },
+      },
+      {
+        title: 'Explorable Explanations',
+        content: {
+          Element: ExplorableExplanationPanel,
+        },
+      },
+      {
+        title: 'Interest Groups',
+        content: {
+          Element: InterestGroups,
+          className: 'overflow-hidden',
+        },
+      },
+      {
+        title: 'Ad Units',
+        content: {
+          Element: AdUnits,
+          className: 'overflow-hidden',
+        },
+      },
+      {
+        title: 'Auctions',
+        content: {
+          Element: Auctions,
+          className: 'overflow-hidden',
+        },
+      },
+      {
+        title: 'Bids',
+        content: {
+          Element: Bids,
+          className: 'overflow-hidden',
+        },
+      },
+    ],
+    []
+  );
+
   return (
-    <div data-testid="protected-audience-content" className="h-full w-full">
-      <LandingPage
-        title={I18n.getMessage('protectedAudience')}
-        psInfoKey={PSInfoKey.ProtectedAudience}
-        extraClasses="max-w-2xl h-fit"
-      />
-    </div>
+    <TabsProvider items={tabItems}>
+      <Panel />
+    </TabsProvider>
   );
 };
 

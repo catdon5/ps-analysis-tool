@@ -48,6 +48,8 @@ import {
   WikiIconWhite,
   type CollapsedSidebarItems,
   Settings as SettingsIcon,
+  WebStoriesIcon,
+  WebStoriesIconWhite,
 } from '@google-psat/design-system';
 import { I18n } from '@google-psat/i18n';
 
@@ -74,6 +76,7 @@ import {
   ProtectedAudience,
   PrivateAggregation,
   Dashboard,
+  WebStories,
 } from './components';
 
 const TABS: SidebarItems = {
@@ -99,7 +102,7 @@ const TABS: SidebarItems = {
           Element: CookieIconWhite,
         },
         children: {},
-        dropdownOpen: true,
+        dropdownOpen: false,
       },
       [SIDEBAR_ITEMS_KEYS.SITE_BOUNDARIES]: {
         title: () => I18n.getMessage('siteBoundaries'),
@@ -260,6 +263,7 @@ const TABS: SidebarItems = {
         },
       },
     },
+    addDivider: true,
   },
   [SIDEBAR_ITEMS_KEYS.DASHBOARD]: {
     title: () => 'Dashboard',
@@ -274,6 +278,22 @@ const TABS: SidebarItems = {
     },
     dropdownOpen: false,
     children: {},
+    containerClassName: 'h-6',
+  },
+  [SIDEBAR_ITEMS_KEYS.EXPLORABLE_EXPLANATIONS]: {
+    title: () => 'Stories',
+    panel: {
+      Element: WebStories,
+    },
+    icon: {
+      Element: WebStoriesIcon,
+    },
+    selectedIcon: {
+      Element: WebStoriesIconWhite,
+    },
+    dropdownOpen: false,
+    children: {},
+    containerClassName: 'h-6',
   },
   [SIDEBAR_ITEMS_KEYS.WIKI]: {
     title: () => I18n.getMessage('wiki'),
@@ -288,6 +308,8 @@ const TABS: SidebarItems = {
     },
     dropdownOpen: false,
     children: {},
+    addSpacer: true,
+    containerClassName: 'h-6',
   },
   [SIDEBAR_ITEMS_KEYS.SETTINGS]: {
     title: () => I18n.getMessage('settings'),
@@ -308,6 +330,7 @@ const TABS: SidebarItems = {
     },
     dropdownOpen: false,
     children: {},
+    containerClassName: 'h-6 mb-2',
   },
 };
 

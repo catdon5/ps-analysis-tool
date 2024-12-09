@@ -76,6 +76,9 @@ export type AdsAndBiddersType = {
     adUnitCode: string;
     bidders: string[];
     mediaContainerSize: number[][];
+    winningBid: number;
+    bidCurrency: string;
+    winningBidder: string;
   };
 };
 

@@ -159,6 +159,16 @@ class PAStore {
       return;
     }
 
+    const isAuctionIDAvailable = this.doesAuctionExistInTab(
+      tabId,
+      uniqueAuctionId,
+      'interestGroupAccessed'
+    );
+
+    if (!isAuctionIDAvailable) {
+      return;
+    }
+
     const {
       bid: initialBidValue,
       componentSellerOrigin,
@@ -310,6 +320,59 @@ class PAStore {
       dataStore.auctionEvents[tabId][uniqueAuctionId] = [];
     }
     return dataStore.auctionEvents[tabId][uniqueAuctionId];
+  }
+
+  /**
+   * Checks if auctionId is present in the tab
+   * @param {string} tabId The ID of the tab auction event is associated with.
+   * @param {string} uniqueAuctionId The ID of the auction event whose array is to be fetched.
+   * @param {string} eventType The type of event that called this.
+   * @returns {object | null} An object holder reporesenting the event data.
+   */
+  doesAuctionExistInTab(
+    tabId: string,
+    uniqueAuctionId: string,
+    eventType = 'interestGroupAuctionEventOccurred'
+  ) {
+    if (uniqueAuctionId === 'globalEvents') {
+      return true;
+    }
+
+    if (!dataStore.auctionEvents[tabId][uniqueAuctionId]) {
+      if (eventType !== 'interestGroupAccessed') {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    if (
+      dataStore.auctionEvents[tabId][uniqueAuctionId].filter(
+        (event) => event.type === 'started'
+      ).length > 0
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Fetch parent auction id for a tab
+   * @param {string} tabId The ID of the tab for which auction data needs to be fetched.
+   * @returns {Set} An object containing auction data.
+   */
+  getParentAuctionId(tabId: string) {
+    const parentAuctionIds = new Set<string>();
+    Object.keys(dataStore.auctionEvents[tabId]).forEach((uniqueAuctionId) => {
+      const parentAuctionId = dataStore.auctionEvents[tabId][
+        uniqueAuctionId
+      ].filter((event) => event.type === 'started')?.[0].parentAuctionId;
+
+      if (parentAuctionId) {
+        parentAuctionIds.add(parentAuctionId);
+      }
+    });
+
+    return parentAuctionIds;
   }
 }
 

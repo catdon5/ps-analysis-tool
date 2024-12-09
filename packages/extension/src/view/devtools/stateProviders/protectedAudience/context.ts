@@ -23,6 +23,8 @@ import {
   type ReceivedBids,
   type NoBidsType,
   type AdsAndBiddersType,
+  type singleAuctionEvent,
+  noop,
 } from '@google-psat/common';
 
 export interface EEEvents {
@@ -37,15 +39,29 @@ export interface EEEvents {
   };
 }
 
+export type AuctionEventsType = {
+  [adunit: string]: {
+    [time: string]: {
+      [sellerURL: string]: {
+        [auctionHostURL: string]: singleAuctionEvent[];
+      };
+    };
+  };
+};
+
 export interface ProtectedAudienceContextType {
   state: {
-    auctionEvents: AuctionEventsType;
+    auctionEvents: AuctionEventsType | null;
     interestGroupDetails: InterestGroups[];
     isMultiSellerAuction: boolean;
     receivedBids: ReceivedBids[];
     noBids: NoBidsType;
     adsAndBidders: AdsAndBiddersType;
     globalEventsForEE: EEEvents | null;
+    selectedAdUnit: string | null;
+  };
+  actions: {
+    setSelectedAdUnit: React.Dispatch<React.SetStateAction<string | null>>;
   };
 }
 
@@ -58,6 +74,10 @@ const initialState: ProtectedAudienceContextType = {
     noBids: {},
     adsAndBidders: {},
     globalEventsForEE: {},
+    selectedAdUnit: null,
+  },
+  actions: {
+    setSelectedAdUnit: noop,
   },
 };
 
