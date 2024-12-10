@@ -46,6 +46,7 @@ app.setUpTimeLine = () => {
   app.bubbles.positions = [];
   app.bubbles.minifiedSVG = null;
   app.timeline.currentIndex = 0;
+  app.bubbles.interestGroupCounts = 0;
   bubbles.clearAndRewriteBubbles();
   app.setup();
 
@@ -168,6 +169,7 @@ app.setupLoop = (doNotPlay) => {
       promiseQueue.nextNodeSkipIndex.push(promiseQueue.queue.length);
       promiseQueue.add(() => {
         app.timeline.currentIndex += 1;
+        app.setCurrentIndex(app.timeline.currentIndex);
         flow.setButtonsDisabilityState();
       });
 
@@ -208,6 +210,7 @@ app.handleNonInteractivePrev = () => {
   app.timeline.isPaused = true;
   const nextIndexPromiseGetter = app.timeline.currentIndex - 1;
   app.timeline.currentIndex -= 1;
+  app.setCurrentIndex(app.timeline.currentIndex);
   flow.setButtonsDisabilityState();
 
   const nextIndex = promiseQueue.nextNodeSkipIndex[nextIndexPromiseGetter];
@@ -301,6 +304,7 @@ app.handleNonInteravtiveNext = () => {
   app.timeline.isPaused = true;
   app.cancelPromise = true;
   app.timeline.currentIndex += 1;
+  app.setCurrentIndex(app.timeline.currentIndex);
   flow.setButtonsDisabilityState();
 
   const nextIndexPromiseGetter = app.timeline.currentIndex;
@@ -487,6 +491,13 @@ export const interestGroupSketch = (p) => {
   p.updateWithProps = (props) => {
     if (props.onClick) {
       app.igp.igClick = props.onClick;
+    }
+
+    if (
+      props.expandedBubbleX &&
+      props.expandedBubbleY &&
+      props.expandedBubbleWidth
+    ) {
       app.bubbles.expandedBubbleX = props.expandedBubbleX;
       app.bubbles.expandedBubbleY = props.expandedBubbleY;
       app.bubbles.expandedCircleDiameter = props.expandedBubbleWidth;
@@ -518,7 +529,7 @@ export const userSketch = (p) => {
   };
 };
 
-app.reset = async () => {
+app.reset = async (fromExtension = false) => {
   promiseQueue.stop();
   app.cancelPromise = true;
   app.timeline.isPaused = true;
@@ -533,9 +544,11 @@ app.reset = async () => {
   utils.markVisitedValue(config.timeline.circles.length, false);
   timeline.eraseAndRedraw();
   await utils.delay(1000);
-  setupInterestGroupCanvas(app.igp);
-  setupUserCanvas(app.up);
-  setupMainCanvas(app.p);
+  if (!fromExtension) {
+    setupInterestGroupCanvas(app.igp);
+    setupUserCanvas(app.up);
+    setupMainCanvas(app.p);
+  }
 
   app.timeline.isPaused = true;
   app.cancelPromise = false;

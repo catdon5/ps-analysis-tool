@@ -21,3 +21,4 @@ export {
   sketch,
 } from './protectedAudience';
 export { default as config } from './protectedAudience/config.js';
+export { default as promiseQueue } from './protectedAudience/lib/promiseQueue.js';
