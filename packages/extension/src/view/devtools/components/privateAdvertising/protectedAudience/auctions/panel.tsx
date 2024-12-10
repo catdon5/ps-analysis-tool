@@ -28,12 +28,12 @@ import {
 /**
  * Internal dependencies.
  */
-import type { AuctionEventsType } from '../../../../stateProviders/protectedAudience/context';
+import type { ProtectedAudienceContextType } from '../../../../stateProviders/protectedAudience/context';
 import AuctionTable from './auctionTable';
 import AdunitPanel from './adunitPanel';
 
 interface AuctionPanelProps {
-  auctionEvents: AuctionEventsType;
+  auctionEvents: ProtectedAudienceContextType['state']['auctionEvents'];
   setSidebarData: React.Dispatch<React.SetStateAction<SidebarItems>>;
 }
 

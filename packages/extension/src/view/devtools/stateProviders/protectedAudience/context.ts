@@ -23,7 +23,6 @@ import {
   type ReceivedBids,
   type NoBidsType,
   type AdsAndBiddersType,
-  type singleAuctionEvent,
   noop,
 } from '@google-psat/common';
 
@@ -38,16 +37,6 @@ export interface EEEvents {
     websiteType: string;
   };
 }
-
-export type AuctionEventsType = {
-  [adunit: string]: {
-    [time: string]: {
-      [sellerURL: string]: {
-        [auctionHostURL: string]: singleAuctionEvent[];
-      };
-    };
-  };
-};
 
 export interface ProtectedAudienceContextType {
   state: {

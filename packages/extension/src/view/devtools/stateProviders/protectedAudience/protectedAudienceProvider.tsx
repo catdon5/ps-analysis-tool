@@ -78,16 +78,15 @@ const Provider = ({ children }: PropsWithChildren) => {
 
   const reshapeAuctionEvents = useCallback(
     (
-      auctionEventsToBeParsed: SingleSellerAuction | MultiSellerAuction | null,
+      auctionEventsToBeParsed: ProtectedAudienceContextType['state']['auctionEvents'],
       isMultiSeller: boolean
     ) => {
       let didAuctionEventsChange = false;
 
-      const reshapeSingleSeller = (prevState: typeof auctionEvents) => {
-        const reshapedAuctionEvents: ProtectedAudienceContextType['state']['auctionEvents'] =
-          {
-            ...prevState,
-          };
+      const reshapeSingleSeller = (prevState: SingleSellerAuction) => {
+        const reshapedAuctionEvents: SingleSellerAuction = {
+          ...prevState,
+        };
 
         if (!auctionEventsToBeParsed) {
           return null;
@@ -95,9 +94,13 @@ const Provider = ({ children }: PropsWithChildren) => {
 
         Object.values(auctionEventsToBeParsed as SingleSellerAuction).forEach(
           (events) => {
-            const adUnitCode = JSON.parse(
+            const configResolvedEvent = events.filter(
+              ({ type }) => type === 'configResolved'
+            )?.[0];
+
+            const adUnitCode: string = JSON.parse(
               // @ts-ignore - sellerSignals is not defined in type, but it is in the data
-              events?.[1]?.auctionConfig?.sellerSignals?.value ?? '{}'
+              configResolvedEvent?.auctionConfig?.sellerSignals?.value ?? '{}'
             ).divId;
 
             if (!adUnitCode) {
@@ -110,9 +113,9 @@ const Provider = ({ children }: PropsWithChildren) => {
               ...reshapedAuctionEvents[adUnitCode],
               [time]: {
                 // @ts-ignore - seller is not defined in type, but it is in the data
-                [events?.[0]?.auctionConfig?.seller ?? '']: {
+                [events?.[0]?.auctionConfig?.seller]: {
                   // @ts-ignore - seller is not defined in type, but it is in the data
-                  [events?.[0]?.auctionConfig?.seller ?? '']: events,
+                  [events?.[0]?.auctionConfig?.seller]: events,
                 },
               },
             };
@@ -122,9 +125,8 @@ const Provider = ({ children }: PropsWithChildren) => {
         return reshapedAuctionEvents;
       };
 
-      const reshapeMultiSeller = (prevState: typeof auctionEvents) => {
-        const reshapedAuctionEvents: ProtectedAudienceContextType['state']['auctionEvents'] =
-          { ...prevState };
+      const reshapeMultiSeller = (prevState: MultiSellerAuction) => {
+        const reshapedAuctionEvents: MultiSellerAuction = { ...prevState };
 
         if (!auctionEventsToBeParsed) {
           return null;
@@ -139,9 +141,13 @@ const Provider = ({ children }: PropsWithChildren) => {
                 return;
               }
 
+              const configResolvedEvent = event.filter(
+                ({ type }) => type === 'configResolved'
+              )?.[0];
+
               adUnit = JSON.parse(
                 // @ts-ignore - sellerSignals is not defined in type, but it is in the data
-                event?.[1]?.auctionConfig?.sellerSignals?.value ?? '{}'
+                configResolvedEvent?.auctionConfig?.sellerSignals?.value ?? '{}'
               ).divId;
             });
 
@@ -161,7 +167,7 @@ const Provider = ({ children }: PropsWithChildren) => {
 
               return acc;
             }, {} as Record<string, singleAuctionEvent[]>);
-
+            //@ts-ignore
             reshapedAuctionEvents[adUnit] = {
               ...reshapedAuctionEvents[adUnit],
               [time]: {
@@ -189,8 +195,8 @@ const Provider = ({ children }: PropsWithChildren) => {
         ) {
           didAuctionEventsChange = true;
           const data = isMultiSeller
-            ? reshapeMultiSeller(prevState)
-            : reshapeSingleSeller(prevState);
+            ? reshapeMultiSeller(prevState as MultiSellerAuction)
+            : reshapeSingleSeller(prevState as SingleSellerAuction);
 
           return data;
         }
@@ -224,14 +230,11 @@ const Provider = ({ children }: PropsWithChildren) => {
 
       const tabId = chrome.devtools.inspectedWindow.tabId;
       const incomingMessageType = message.type;
-
       if (
         incomingMessageType === 'AUCTION_EVENTS' &&
         message.payload.auctionEvents
       ) {
         if (message.payload.tabId === tabId) {
-          setIsMultiSellerAuction(message.payload.multiSellerAuction);
-
           setGlobalEventsForEE((prevState) => {
             if (!prevState && message.payload.globalEventsForEE) {
               return message.payload.globalEventsForEE;
@@ -248,23 +251,8 @@ const Provider = ({ children }: PropsWithChildren) => {
             return prevState;
           });
 
-          setAuctionEvents((prevState) => {
-            if (!prevState && message.payload.auctionEvents) {
-              didAuctionEventsChange = true;
-              return message.payload.auctionEvents;
-            }
+          setIsMultiSellerAuction(message.payload.multiSellerAuction);
 
-            if (
-              prevState &&
-              message.payload.auctionEvents &&
-              !isEqual(prevState, message.payload.auctionEvents)
-            ) {
-              didAuctionEventsChange = true;
-              return message.payload.auctionEvents;
-            }
-
-            return prevState;
-          });
           didAuctionEventsChange = reshapeAuctionEvents(
             message.payload.auctionEvents,
             message.payload.multiSellerAuction
@@ -432,7 +420,7 @@ const Provider = ({ children }: PropsWithChildren) => {
         onCommittedNavigationListener
       );
     };
-  }, [messagePassingListener]);
+  }, [messagePassingListener, onCommittedNavigationListener]);
 
   const memoisedValue: ProtectedAudienceContextType = useMemo(() => {
     return {
@@ -458,6 +446,7 @@ const Provider = ({ children }: PropsWithChildren) => {
     noBids,
     receivedBids,
     adsAndBidders,
+    selectedAdUnit,
   ]);
 
   return <Context.Provider value={memoisedValue}>{children}</Context.Provider>;

@@ -63,6 +63,7 @@ function computeInterestGroupDetails(
           //Fail silently.
           return {
             ...event,
+            details: {},
           };
         }
       })
