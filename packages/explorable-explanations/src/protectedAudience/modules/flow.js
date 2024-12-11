@@ -16,7 +16,7 @@
 /**
  * Internal dependencies.
  */
-import app from '../app';
+import app from '../app.js';
 import config from '../config.js';
 
 /**
@@ -35,6 +35,10 @@ flow.getTimelineCircleCoordinates = (index) => {
   const { diameter } = circleProps;
 
   const positions = app.timeline.circlePositions[index];
+
+  if (app.isRevisitingNodeInInteractiveMode) {
+    return { x: positions.x, y: positions.y + 20 + diameter / 2 };
+  }
 
   return { x: positions.x, y: positions.y + diameter / 2 };
 };

@@ -13,11 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from './protectedAudience/components';
-export {
-  app,
-  userSketch,
-  interestGroupSketch,
-  sketch,
-} from './protectedAudience';
-export { default as config } from './protectedAudience/config.js';
+/**
+ * Internal dependecies.
+ */
+import app from '../app';
+import config from '../config';
+
+export const wipeAndRecreateMainCanvas = () => {
+  app.p.clear();
+  app.p.background(config.canvas.background);
+
+  app.timeline.drawTimelineLine();
+  app.timeline.drawTimeline(config.timeline);
+};
+
+export const wipeAndRecreateInterestCanvas = () => {
+  app.igp.clear();
+};
+
+export const wipeAndRecreateUserCanvas = () => {
+  app.up.clear();
+};

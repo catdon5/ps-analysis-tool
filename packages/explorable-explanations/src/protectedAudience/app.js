@@ -47,7 +47,6 @@ const app = {
     expandedCircleDiameter: 640,
     minifiedCircleDiameter: 50,
   },
-  utils: {},
   p: null,
   igp: null,
   up: null,
@@ -62,6 +61,14 @@ const app = {
   visitedIndexOrder: [],
   visitedIndexOrderTracker: -1,
   isRevisitingNodeInInteractiveMode: false,
+  usedNextOrPrev: false,
+  canvasEventListerners: {
+    main: {
+      mouseOver: {},
+      mouseOut: {},
+      mouseMoved: {},
+    },
+  },
 };
 
 export default app;
