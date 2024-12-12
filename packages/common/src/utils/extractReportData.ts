@@ -17,20 +17,27 @@
  * Internal dependencies
  */
 import {
-  ErroredOutUrlsData,
   CompleteJson,
   CookieFrameStorageType,
+  ErroredOutUrlsData,
 } from '../cookies.types';
 import { LibraryData } from '../libraryDetection.types';
 import extractCookies from './extractCookies';
 
 const extractReportData = (data: CompleteJson[]) => {
   const landingPageCookies = {};
-  const consolidatedLibraryMatches: { [url: string]: LibraryData } = {};
   const erroredOutUrlsData: ErroredOutUrlsData[] = [];
+  const consolidatedLibraryMatches: { [url: string]: LibraryData } = {};
 
   data.forEach(({ cookieData, pageUrl, libraryMatches, erroredOutUrls }) => {
     erroredOutUrlsData.push(...(erroredOutUrls ?? []));
+
+    if (
+      erroredOutUrls &&
+      erroredOutUrls.filter(({ url }) => url === pageUrl).length > 0
+    ) {
+      return;
+    }
 
     formatCookieData(
       extractCookies(cookieData, pageUrl, true),
