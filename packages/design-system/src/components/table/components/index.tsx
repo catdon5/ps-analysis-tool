@@ -28,7 +28,7 @@ import TableBody from './tableBody';
 import ColumnMenu from './columnMenu';
 import { useTable } from '../useTable';
 import TableTopBar from './tableTopBar';
-import ChipsBar from './filtersSidebar/chips';
+import TableChipsBar from './filtersSidebar/chips';
 import FiltersSidebar from './filtersSidebar';
 
 interface TableProps {
@@ -141,7 +141,7 @@ const Table = ({
             hideSearch={hideSearch}
           />
           {!hideFiltering && (
-            <ChipsBar
+            <TableChipsBar
               selectedFilters={selectedFilters}
               resetFilters={resetFilters}
               toggleFilterSelection={toggleFilterSelection}
