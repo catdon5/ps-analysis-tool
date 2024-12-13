@@ -26,8 +26,8 @@ import extractCookies from './extractCookies';
 
 const extractReportData = (data: CompleteJson[]) => {
   const landingPageCookies = {};
-  const erroredOutUrlsData: ErroredOutUrlsData[] = [];
   const consolidatedLibraryMatches: { [url: string]: LibraryData } = {};
+  const erroredOutUrlsData: ErroredOutUrlsData[] = [];
 
   data.forEach(({ cookieData, pageUrl, libraryMatches, erroredOutUrls }) => {
     erroredOutUrlsData.push(...(erroredOutUrls ?? []));
