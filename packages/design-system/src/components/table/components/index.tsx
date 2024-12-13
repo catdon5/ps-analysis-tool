@@ -29,7 +29,7 @@ import ColumnMenu from './columnMenu';
 import { useTable } from '../useTable';
 import TableTopBar from './tableTopBar';
 import TableChipsBar from './filtersSidebar/chips';
-import FiltersSidebar from './filtersSidebar';
+import TableFiltersSidebar from './filtersSidebar';
 
 interface TableProps {
   selectedKey: string | undefined | null;
@@ -159,7 +159,7 @@ const Table = ({
             }}
             className="overflow-auto h-full"
           >
-            <FiltersSidebar
+            <TableFiltersSidebar
               filters={filters}
               isSelectAllFilterSelected={isSelectAllFilterSelected}
               toggleFilterSelection={toggleFilterSelection}
