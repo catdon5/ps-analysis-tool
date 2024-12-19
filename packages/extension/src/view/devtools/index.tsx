@@ -36,6 +36,7 @@ import {
   SettingsProvider,
   AllowedListProvider,
   ProtectedAudienceContextProvider,
+  StoriesProvider,
 } from './stateProviders';
 
 const isDarkMode = chrome.devtools.panels.themeName === 'dark';
@@ -54,7 +55,9 @@ if (root) {
             <TablePersistentSettingsProvider>
               <LibraryDetectionProvider>
                 <AllowedListProvider>
+                  <StoriesProvider>
                   <App />
+                </StoriesProvider>
                 </AllowedListProvider>
               </LibraryDetectionProvider>
             </TablePersistentSettingsProvider>

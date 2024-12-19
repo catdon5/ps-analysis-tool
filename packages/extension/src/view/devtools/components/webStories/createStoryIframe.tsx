@@ -55,6 +55,7 @@ export const getStoryMarkup = (storyJson: SingleStoryJSON[]) => {
     <style>
         .carousel-container {
             position: relative;
+						padding: 16px 0;
         }
 
         .carousel-container::after {
@@ -271,7 +272,7 @@ export const getStoryMarkup = (storyJson: SingleStoryJSON[]) => {
 
         .entry-points {
             display: flex;
-            overflow-y: visible;
+            overflow-y: hidden;
             flex-direction: row;
             flex-wrap: wrap;
             gap: 24px 10px;
@@ -553,7 +554,7 @@ export const getStoryMarkup = (storyJson: SingleStoryJSON[]) => {
           </div>
           <span class="entry-point-card-subtitle"> By ${publisherName} </span>
           </div>
-  
+
           <div class="card-headline-container">
               <span class="entry-point-card-headline"> ${storyTitle} </span>
           </div>

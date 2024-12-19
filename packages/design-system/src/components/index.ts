@@ -61,3 +61,8 @@ export { default as Pill } from './pill';
 export { default as PillToggle } from './pillToggle';
 export { default as Breadcrumbs } from './breadcrumbs';
 export { default as InternalNavigationForAnchor } from './internalNavigationForAnchor';
+export { default as TopBar } from './topbar';
+export { default as ChipsBar } from './chipsBar';
+export * from './chipsBar';
+export { default as FiltersSidebar } from './filtersSidebar';
+export * from './filtersSidebar';
