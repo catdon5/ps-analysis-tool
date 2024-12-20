@@ -16,26 +16,31 @@
 /**
  * External dependencies.
  */
-import React from 'react';
-import { ChipsBar, FiltersSidebar, TopBar } from '@google-psat/design-system';
+import React, { useEffect, useRef } from 'react';
+import {
+  ChipsBar,
+  FiltersSidebar,
+  ProgressBar,
+  TopBar,
+} from '@google-psat/design-system';
 import { Resizable } from 're-resizable';
 import { noop } from '@google-psat/common';
 
 /**
  * Internal dependencies.
  */
-import { getStoryMarkup } from './createStoryIframe';
-import { STORY_JSON } from './story';
-import { useStories } from '../../stateProviders';
+import { useWebStories } from '../../stateProviders';
+import { STORY_MARKUP } from '../../stateProviders/webStories/constants';
 
 interface WebStoriesProps {
   storyOpened: boolean;
 }
 
 const WebStories = ({ storyOpened }: WebStoriesProps) => {
-  const storyMarkup = getStoryMarkup(STORY_JSON);
-
+  const iframeRef = useRef<HTMLIFrameElement>(null);
   const {
+    loadingState,
+    allStoryJSON,
     searchValue,
     setSearchValue,
     showFilterSidebar,
@@ -47,7 +52,13 @@ const WebStories = ({ storyOpened }: WebStoriesProps) => {
     resetFilters,
     selectedFilterValues,
     filters,
-  } = useStories(({ state, actions }) => ({
+    iframeLoaded,
+    pageNumber,
+  } = useWebStories(({ state, actions }) => ({
+    iframeLoaded: state.iframeLoaded,
+    pageNumber: state.pageNumber,
+    loadingState: state.loadingState,
+    allStoryJSON: state.allStoryJSON,
     searchValue: state.searchValue,
     filters: state.filters,
     sortValue: state.sortValue,
@@ -61,79 +72,98 @@ const WebStories = ({ storyOpened }: WebStoriesProps) => {
     resetFilters: actions.resetFilters,
   }));
 
+  useEffect(() => {
+    if (!iframeRef.current) {
+      return;
+    }
+
+    if (loadingState || !iframeLoaded) {
+      return;
+    }
+
+    iframeRef.current?.contentWindow?.postMessage(
+      {
+        story: allStoryJSON,
+        infiniteScroll: pageNumber === 2,
+      },
+      '*'
+    );
+  }, [allStoryJSON, loadingState, iframeLoaded, pageNumber]);
+
   return (
-    <div
-      data-testid="web-stories-content"
-      className="h-full w-full text-raisin-black dark:text-bright-gray overflow-y-auto"
-    >
-      <div className="h-full w-full flex flex-col">
-        {!storyOpened && (
-          <>
-            <TopBar
-              searchValue={searchValue}
-              setSearchValue={setSearchValue}
-              showFilterSidebar={showFilterSidebar}
-              setShowFilterSidebar={setShowFilterSidebar}
-              hideFiltering={false}
-              disableFiltering={false}
-              hideSearch={false}
-              count={0} // TODO: Add count
-            >
-              <div className="flex justify-between items-center min-w-[125px] text-raisin-black dark:text-bright-gray">
-                <p>Sort by:</p>
-                <select
-                  value={sortValue}
-                  onChange={(e) =>
-                    setSortValue(e.target.value as 'latest' | 'oldest')
-                  }
-                  className="hover:opacity-70 active:opacity-60 focus:bg-anti-flash-white
-        focus:dark:bg-quartz bg-transparent cursor-pointer rounded-sm px-2 py-[1px] pr-5 appearance-none bg-no-repeat bg-right
-        bg-[url(data:image/svg+xml;base64,Cjxzdmcgd2lkdGg9IjE0IiBoZWlnaHQ9IjE0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Im03IDkuNDUgMy44NS01LjZoLTcuNyIgZmlsbD0iIzAwMCIvPjwvc3ZnPgo=)]
-        dark:bg-[url(data:image/svg+xml;base64,Cjxzdmcgd2lkdGg9IjE0IiBoZWlnaHQ9IjE0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Im03IDkuNDUgMy44NS01LjZoLTcuNyIgZmlsbD0iI0MyQzdDOSIvPjwvc3ZnPgo=)]"
-                  style={{
-                    backgroundPositionX: '100%',
-                    backgroundPositionY: '4px',
-                  }}
-                >
-                  <option value="Latest">Latest</option>
-                  <option value="Oldest">Oldest</option>
-                </select>
-              </div>
-            </TopBar>
-            <ChipsBar
-              selectedFilters={selectedFilters}
-              toggleFilterSelection={toggleFilterSelection}
-              resetFilters={resetFilters}
-            />
-          </>
-        )}
-        <div className="flex-1 w-full flex divide-x divide-american-silver dark:divide-quartz border-t border-gray-300 dark:border-quartz">
-          {showFilterSidebar && !storyOpened && (
-            <Resizable
-              minWidth="150px"
-              maxWidth="50%"
-              enable={{
-                right: true,
-              }}
-            >
-              <FiltersSidebar
-                filters={filters}
-                selectedFilterValues={selectedFilterValues}
-                toggleFilterSelection={toggleFilterSelection}
-                isSelectAllFilterSelected={() => false}
-                toggleSelectAllFilter={noop}
-              />
-            </Resizable>
-          )}
-          <div
-            data-testid="web-stories-content"
-            className="h-full flex-1 text-raisin-black dark:text-bright-gray"
+    <div className="h-full w-full flex flex-col">
+      {!storyOpened && (
+        <>
+          <TopBar
+            searchValue={searchValue}
+            setSearchValue={setSearchValue}
+            showFilterSidebar={showFilterSidebar}
+            setShowFilterSidebar={setShowFilterSidebar}
+            hideFiltering={false}
+            disableFiltering={false}
+            hideSearch={false}
+            count={allStoryJSON.length}
           >
+            <div className="flex justify-between items-center min-w-[100px] text-raisin-black dark:text-bright-gray">
+              <p className="min-w-fit">Sort by:</p>
+              <select
+                value={sortValue}
+                onChange={(e) =>
+                  setSortValue(e.target.value as 'latest' | 'oldest')
+                }
+                className="hover:opacity-70 active:opacity-60 focus:bg-anti-flash-white
+								focus:dark:bg-quartz bg-transparent cursor-pointer rounded-sm px-2 py-[1px] pr-5 appearance-none bg-no-repeat bg-right
+								bg-[url(data:image/svg+xml;base64,Cjxzdmcgd2lkdGg9IjE0IiBoZWlnaHQ9IjE0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Im03IDkuNDUgMy44NS01LjZoLTcuNyIgZmlsbD0iIzAwMCIvPjwvc3ZnPgo=)]
+								dark:bg-[url(data:image/svg+xml;base64,Cjxzdmcgd2lkdGg9IjE0IiBoZWlnaHQ9IjE0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Im03IDkuNDUgMy44NS01LjZoLTcuNyIgZmlsbD0iI0MyQzdDOSIvPjwvc3ZnPgo=)]"
+                style={{
+                  backgroundPositionX: '100%',
+                  backgroundPositionY: '4px',
+                }}
+              >
+                <option value="latest">Latest</option>
+                <option value="oldest">Oldest</option>
+              </select>
+            </div>
+          </TopBar>
+          <ChipsBar
+            selectedFilters={selectedFilters}
+            toggleFilterSelection={toggleFilterSelection}
+            resetFilters={resetFilters}
+          />
+        </>
+      )}
+      <div className="flex-1 w-full flex divide-x divide-american-silver dark:divide-quartz border-t border-gray-300 dark:border-quartz">
+        {showFilterSidebar && !storyOpened && (
+          <Resizable
+            minWidth="150px"
+            maxWidth="50%"
+            enable={{
+              right: true,
+            }}
+          >
+            <FiltersSidebar
+              filters={filters}
+              selectedFilterValues={selectedFilterValues}
+              toggleFilterSelection={toggleFilterSelection}
+              isSelectAllFilterSelected={() => false}
+              toggleSelectAllFilter={noop}
+            />
+          </Resizable>
+        )}
+        <div
+          data-testid="web-stories-content"
+          className="h-full flex-1 text-raisin-black dark:text-bright-gray"
+        >
+          <div className="h-full w-full flex">
+            {loadingState && !iframeLoaded && (
+              <ProgressBar additionalStyles="w-1/3 mx-auto h-full" />
+            )}
             <iframe
-              srcDoc={storyMarkup}
+              ref={iframeRef}
+              srcDoc={STORY_MARKUP}
               style={{
-                width: '100%',
-                height: '100%',
+                width: loadingState ? '0%' : '100%',
+                height: loadingState ? '0%' : '100%',
                 border: 'none',
                 overflow: 'hidden',
               }}
